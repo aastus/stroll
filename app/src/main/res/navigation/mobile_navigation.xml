@@ -3,23 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
-
-    <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.stroll.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+    app:startDestination="@+id/navigation_dashboard">
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.stroll.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="Dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.stroll.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_quests"
+        android:name="com.example.stroll.ui.quests.QuestsFragment"
+        android:label="Quests"
+        tools:layout="@layout/fragment_quests" />
+
+    <fragment
+        android:id="@+id/navigation_create"
+        android:name="com.example.stroll.ui.create.CreateFragment"
+        android:label="Create"
+        tools:layout="@layout/fragment_create" />
+
+    <fragment
+        android:id="@+id/navigation_awards"
+        android:name="com.example.stroll.ui.awards.AwardsFragment"
+        android:label="Awards"
+        tools:layout="@layout/fragment_awards" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.stroll.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

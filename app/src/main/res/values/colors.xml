@@ -7,4 +7,26 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="primary_purple">#8A2BE2</color>
+    <color name="light_background">#F4F6FD</color>
+
+    <color name="text_dark">#0D1B2A</color>
+    <color name="text_grey">#6C757D</color>
+    <color name="progress_track">#E0E0E0</color>
+
+    <color name="badge_easy_bg">#D1E7DD</color>
+    <color name="badge_easy_text">#0F5132</color>
+    <color name="badge_medium_bg">#FFF3CD</color>
+    <color name="badge_medium_text">#856404</color>
+
+    <color name="gradient_start">#FFAA00</color>
+    <color name="gradient_end">#FF007F</color>
+    <color name="card_green_bg">#E8FBFA</color>
+    <color name="card_green_text">#0F9D58</color>
+
+    <color name="card_pink_bg">#FFF0F5</color>
+    <color name="card_pink_text">#9C27B0</color>
+
+    <color name="badge_locked_bg">#E2E2E2</color>
+    <color name="badge_locked_text">#757575</color>
 </resources>
