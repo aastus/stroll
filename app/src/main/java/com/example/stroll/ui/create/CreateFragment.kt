@@ -1,60 +1,50 @@
 package com.example.stroll.ui.create
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.Spinner
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.stroll.R
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CreateFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CreateFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CreateFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CreateFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val spinner: Spinner = view.findViewById(R.id.spinner_difficulty)
+        val difficulties = arrayOf("Easy (100 XP)", "Medium (250 XP)", "Hard (500 XP)")
+
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, difficulties)
+        spinner.adapter = adapter
+        spinner.setSelection(1)
+
+        val btnCancel: Button = view.findViewById(R.id.btn_cancel)
+        btnCancel.setOnClickListener {
+            view.findViewById<android.widget.EditText>(R.id.et_quest_title).text.clear()
+            view.findViewById<android.widget.EditText>(R.id.et_quest_desc).text.clear()
+            spinner.setSelection(1)
+        }
+
+        val btnCreate: Button = view.findViewById(R.id.btn_create)
+        btnCreate.setOnClickListener {
+            val title = view.findViewById<android.widget.EditText>(R.id.et_quest_title).text.toString()
+            if (title.isNotEmpty()) {
+                Toast.makeText(requireContext(), "Quest '$title' created successfully!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Please enter a quest title", Toast.LENGTH_SHORT).show()
             }
+        }
     }
 }

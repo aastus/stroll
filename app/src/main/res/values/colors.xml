@@ -21,12 +21,16 @@
 
     <color name="gradient_start">#FFAA00</color>
     <color name="gradient_end">#FF007F</color>
-    <color name="card_green_bg">#E8FBFA</color>
-    <color name="card_green_text">#0F9D58</color>
-
     <color name="card_pink_bg">#FFF0F5</color>
     <color name="card_pink_text">#9C27B0</color>
 
     <color name="badge_locked_bg">#E2E2E2</color>
     <color name="badge_locked_text">#757575</color>
+
+    <color name="card_blue_bg">#F4F7FF</color>
+    <color name="card_blue_text">#4A6DFF</color>
+    <color name="card_orange_bg">#FFF6F0</color>
+    <color name="card_orange_text">#FF7A00</color>
+    <color name="card_green_bg">#F0FFF4</color>
+    <color name="card_green_text">#00BFA5</color>
 </resources>
