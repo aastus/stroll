@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_onboarding_main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="60dp">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/bg_circle_logo"
+            android:padding="16dp"
+            android:src="@drawable/ic_hiking"
+            app:tint="@android:color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Step Tracker"
+            android:textColor="@android:color/white"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Begin Your Fitness Journey"
+            android:textColor="#E0E0E0"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="180dp"
+        android:fillViewport="true"
+        android:clipToPadding="false">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginBottom="32dp"
+            app:cardBackgroundColor="#F8F9FA"
+            app:cardCornerRadius="32dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="32dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome! 👋"
+                    android:textColor="@color/text_dark"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="24dp"
+                    android:text="Let's get to know you better"
+                    android:textColor="@color/text_grey"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="👤 Your Name"
+                    android:textColor="@color/text_dark"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/bg_input_field"
+                    android:hint="e.g., Alex Johnson"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="@color/text_dark"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📅 Age"
+                    android:textColor="@color/text_dark"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/et_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/bg_input_field"
+                    android:hint="e.g., 25"
+                    android:inputType="number"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="@color/text_dark"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📏 Height (cm)"
+                    android:textColor="@color/text_dark"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/et_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/bg_input_field"
+                    android:hint="e.g., 175"
+                    android:inputType="numberDecimal"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="@color/text_dark"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⚖️ Weight (kg)"
+                    android:textColor="@color/text_dark"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/et_weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="32dp"
+                    android:background="@drawable/bg_input_field"
+                    android:hint="e.g., 70"
+                    android:inputType="numberDecimal"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="@color/text_dark"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_start"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bg_gradient_button"
+                    android:text="Start My Journey"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:text="Your data is stored locally and never shared"
+                    android:textColor="#A0A0A0"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

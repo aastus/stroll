@@ -25,6 +25,8 @@ class DashboardFragment : Fragment(), SensorEventListener {
     private var stepSensor: Sensor? = null
     private var running = false
 
+    private var userWeight = 65f
+    private var stepLengthMeters = 0.705f // дефолтний крок
     // Математика сенсора
     private var initialStepsAtStartOfDay = 0f
     private var isSensorInitialized = false
@@ -55,6 +57,13 @@ class DashboardFragment : Fragment(), SensorEventListener {
 
         // Ініціалізуємо БД
         database = AppDatabase.getDatabase(requireContext())
+
+        // --- НОВИЙ КОД: ЗЧИТУЄМО ДАНІ ПРОФІЛЮ ---
+        val prefs = requireActivity().getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
+        val heightCm = prefs.getFloat("height", 170f)
+        userWeight = prefs.getFloat("weight", 65f)
+        stepLengthMeters = (heightCm * 0.415f) / 100f // Розраховуємо довжину кроку
+        // ----------------------------------------
 
         // Знаходимо всі в'юшки
         tvDateHeader = view.findViewById(R.id.tv_date_header)
@@ -131,9 +140,9 @@ class DashboardFragment : Fragment(), SensorEventListener {
             val validSteps = if (todaySteps > 0) todaySteps else 0
 
             // Математика статистики
-            val dist = validSteps * 0.0008
-            val cals = (validSteps * 0.0005 * 70).toInt() // 70 - вага
-            val mins = validSteps / 110
+            val dist = (validSteps * stepLengthMeters) / 1000.0 // Дистанція в кілометрах
+            val cals = (dist * userWeight * 1.036).toInt() // Калорії = км * вага * коефіцієнт
+            val mins = validSteps / 100 // Приблизно 100 кроків на хвилину
 
             // Оновлюємо екран
             updateUI(validSteps, dist, cals, mins)

@@ -1,6 +1,8 @@
 package com.example.stroll
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -15,6 +17,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val prefs = getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
+        val isFirstRun = prefs.getBoolean("isFirstRun", true)
+
+        if (isFirstRun) {
+            startActivity(Intent(this, OnboardingActivity::class.java))
+            finish()
+            return
+        }
         setContentView(R.layout.activity_main)
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
