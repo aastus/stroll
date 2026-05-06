@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [DailyStat::class], version = 1, exportSchema = false)
+@Database(entities = [DailyStat::class, Quest::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun statDao(): StatDao
+    abstract fun questDao(): QuestDao 
 
     companion object {
         @Volatile
@@ -20,7 +21,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "stroll_database"
-                ).build()
+                )
+                .fallbackToDestructiveMigration() 
+                .build()
                 INSTANCE = instance
                 instance
             }
