@@ -1,18 +1,23 @@
 package com.example.stroll.ui.dashboard
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.hardware.*
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.stroll.R
 import com.example.stroll.data.AppDatabase
 import com.example.stroll.data.DailyStat
+import com.google.android.material.card.MaterialCardView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -47,6 +52,17 @@ class DashboardFragment : Fragment(), SensorEventListener {
     private lateinit var tvMinutes: TextView
     private lateinit var btnPrevDay: ImageView
     private lateinit var btnNextDay: ImageView
+    private lateinit var ivQuestBackground: ImageView
+
+    // Active quest UI
+    private lateinit var cardDashboardQuest: MaterialCardView
+    private lateinit var tvDashQuestName: TextView
+    private lateinit var tvDashQuestDesc: TextView
+    private lateinit var tvDashQuestDifficulty: TextView
+    private lateinit var tvDashQuestProgress: TextView
+    private lateinit var progressDashQuest: ProgressBar
+    private lateinit var tvDashQuestPercent: TextView
+    private lateinit var tvDashQuestXp: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_dashboard, container, false)
@@ -74,6 +90,17 @@ class DashboardFragment : Fragment(), SensorEventListener {
         tvMinutes = view.findViewById(R.id.tv_minutes)
         btnPrevDay = view.findViewById(R.id.btn_prev_day)
         btnNextDay = view.findViewById(R.id.btn_next_day)
+        ivQuestBackground = view.findViewById(R.id.iv_quest_background)
+
+        // Active quest views
+        cardDashboardQuest = view.findViewById(R.id.card_dashboard_quest)
+        tvDashQuestName = view.findViewById(R.id.tv_dash_quest_name)
+        tvDashQuestDesc = view.findViewById(R.id.tv_dash_quest_desc)
+        tvDashQuestDifficulty = view.findViewById(R.id.tv_dash_quest_difficulty)
+        tvDashQuestProgress = view.findViewById(R.id.tv_dash_quest_progress)
+        progressDashQuest = view.findViewById(R.id.progress_dash_quest)
+        tvDashQuestPercent = view.findViewById(R.id.tv_dash_quest_percent)
+        tvDashQuestXp = view.findViewById(R.id.tv_dash_quest_xp)
 
         // Ініціалізуємо сенсор
         sensorManager = requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -87,6 +114,63 @@ class DashboardFragment : Fragment(), SensorEventListener {
 
         // Завантажуємо дані для обраної дати (спочатку це "Сьогодні")
         loadDataForDate(dateFormat.format(currentDateCalendar.time))
+
+        // Завантажуємо активний квест
+        loadActiveQuest()
+    }
+
+    private fun loadActiveQuest() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val activeQuest = database.questDao().getActiveQuest()
+
+            withContext(Dispatchers.Main) {
+                if (activeQuest != null) {
+                    cardDashboardQuest.visibility = View.VISIBLE
+
+                    tvDashQuestName.text = activeQuest.name
+                    tvDashQuestDesc.text = activeQuest.description
+                    tvDashQuestDifficulty.text = activeQuest.difficulty
+
+                    // Difficulty badge color
+                    val badgeBg = tvDashQuestDifficulty.background.mutate()
+                    if (badgeBg is GradientDrawable) {
+                        val color = when {
+                            activeQuest.difficulty.lowercase().contains("easy") -> Color.parseColor("#4CAF50")
+                            activeQuest.difficulty.lowercase().contains("medium") -> Color.parseColor("#FF9800")
+                            activeQuest.difficulty.lowercase().contains("hard") -> Color.parseColor("#F44336")
+                            activeQuest.difficulty.lowercase().contains("extreme") -> Color.parseColor("#9C27B0")
+                            else -> Color.parseColor("#8A2BE2")
+                        }
+                        badgeBg.setColor(color)
+                        tvDashQuestDifficulty.background = badgeBg
+                    }
+
+                    // Progress
+                    val currentKm = activeQuest.currentSteps / 1000.0
+                    val targetKm = activeQuest.distanceKm
+                    tvDashQuestProgress.text = String.format("%.1f / %.1f km", currentKm, targetKm)
+
+                    val percent = if (targetKm > 0) ((currentKm / targetKm) * 100).toInt().coerceAtMost(100) else 0
+                    progressDashQuest.progress = percent
+                    tvDashQuestPercent.text = "${percent}% complete"
+                    tvDashQuestXp.text = "\uD83C\uDFC6 ${activeQuest.xpReward} XP"
+
+                    // Set quest image as background if available
+                    if (activeQuest.imageUri.isNotEmpty()) {
+                        try {
+                            ivQuestBackground.setImageURI(Uri.parse(activeQuest.imageUri))
+                        } catch (e: Exception) {
+                            ivQuestBackground.setImageResource(R.drawable.default_image)
+                        }
+                    } else {
+                        ivQuestBackground.setImageResource(R.drawable.default_image)
+                    }
+                } else {
+                    cardDashboardQuest.visibility = View.GONE
+                    ivQuestBackground.setImageResource(R.drawable.default_image)
+                }
+            }
+        }
     }
 
     private fun changeDay(offset: Int) {
@@ -174,6 +258,10 @@ class DashboardFragment : Fragment(), SensorEventListener {
         super.onResume()
         running = true
         stepSensor?.also { sensorManager?.registerListener(this, it, SensorManager.SENSOR_DELAY_UI) }
+        // Оновлюємо квест при поверненні на сторінку
+        if (::database.isInitialized) {
+            loadActiveQuest()
+        }
     }
 
     override fun onPause() {

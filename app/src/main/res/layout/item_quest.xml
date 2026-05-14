@@ -15,8 +15,10 @@
         android:orientation="vertical">
 
         <FrameLayout
+            android:id="@+id/image_container"
             android:layout_width="match_parent"
-            android:layout_height="140dp">
+            android:layout_height="120dp"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/iv_quest_bg"
@@ -24,43 +26,19 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:background="#EAECEF" />
-
-            <TextView
-                android:id="@+id/tv_difficulty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="12dp"
-                android:background="@drawable/bg_input_field"
-                android:backgroundTint="#CCFFFFFF"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="4dp"
-                android:text="Medium"
-                android:textColor="@color/text_dark"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/btn_delete_quest"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_gravity="end|top"
-                android:layout_margin="12dp"
-                android:background="@drawable/bg_circle_logo"
-                android:backgroundTint="#CCFF4444"
-                android:padding="8dp"
-                android:src="@android:drawable/ic_menu_delete"
-                app:tint="@android:color/white" />
         </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
 
+            <!-- Title row with delete button -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
@@ -68,29 +46,110 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Sunday Park Stroll"
+                    android:text="Morning Walker"
                     android:textColor="@color/text_dark"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_quest_distance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4.2 km"
-                    android:textColor="@color/primary_purple"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                <ImageView
+                    android:id="@+id/btn_delete_quest"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="8dp"
+                    android:padding="4dp"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    app:tint="#CCCCCC" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_quest_route"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_quest_description"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Start ➔ Destination"
+                android:layout_marginTop="4dp"
+                android:text="Walk 5,000 steps before noon"
                 android:textColor="@color/text_grey"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_difficulty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_difficulty_badge"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="4dp"
+                    android:text="easy"
+                    android:textColor="@android:color/white"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_xp_reward"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="🏆 100 XP"
+                    android:textColor="#FF8C00"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Target Distance"
+                    android:textColor="@color/text_grey"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_progress_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 / 5.0 km"
+                    android:textColor="@color/text_dark"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="8dp"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/bg_progress_bar" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_action"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_gradient_button"
+                android:text="▶  Start Quest"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

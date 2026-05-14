@@ -15,4 +15,16 @@ interface QuestDao {
 
     @Delete
     suspend fun deleteQuest(quest: Quest)
+
+    @Query("SELECT * FROM quests WHERE status = 'active' LIMIT 1")
+    suspend fun getActiveQuest(): Quest?
+
+    @Query("UPDATE quests SET status = :status WHERE id = :questId")
+    suspend fun updateQuestStatus(questId: Int, status: String)
+
+    @Query("UPDATE quests SET currentSteps = :steps WHERE id = :questId")
+    suspend fun updateQuestProgress(questId: Int, steps: Int)
+
+    @Query("SELECT COUNT(*) FROM quests")
+    suspend fun getQuestCount(): Int
 }

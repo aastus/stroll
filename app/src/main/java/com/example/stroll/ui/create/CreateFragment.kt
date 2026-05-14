@@ -54,6 +54,7 @@ class CreateFragment : Fragment() {
     private lateinit var etStartPoint: AutoCompleteTextView
     private lateinit var etDestination: AutoCompleteTextView
     private lateinit var etQuestName: EditText
+    private lateinit var etQuestDescription: EditText
     private lateinit var spinnerDifficulty: Spinner
     private lateinit var ivQuestImage: ImageView
     private lateinit var btnPickImage: FrameLayout
@@ -93,6 +94,7 @@ class CreateFragment : Fragment() {
         etStartPoint = view.findViewById(R.id.et_start_point)
         etDestination = view.findViewById(R.id.et_destination)
         etQuestName = view.findViewById(R.id.et_quest_name)
+        etQuestDescription = view.findViewById(R.id.et_quest_description)
         spinnerDifficulty = view.findViewById(R.id.spinner_difficulty)
         ivQuestImage = view.findViewById(R.id.iv_quest_image)
         btnPickImage = view.findViewById(R.id.btn_pick_image)
@@ -264,28 +266,42 @@ class CreateFragment : Fragment() {
 
     private fun saveQuest() {
         val name = etQuestName.text.toString()
-        if (name.isEmpty() || startMarker == null || destMarker == null || selectedImageUri == null) {
-            Toast.makeText(requireContext(), "Please fill all fields and select an image!", Toast.LENGTH_SHORT).show()
+        if (name.isEmpty() || startMarker == null || destMarker == null) {
+            Toast.makeText(requireContext(), "Please fill quest name and set both route points!", Toast.LENGTH_SHORT).show()
             return
+        }
+
+        val difficultyStr = spinnerDifficulty.selectedItem.toString()
+        val xpReward = when {
+            difficultyStr.lowercase().contains("easy") -> 100
+            difficultyStr.lowercase().contains("medium") -> 250
+            difficultyStr.lowercase().contains("hard") -> 500
+            difficultyStr.lowercase().contains("extreme") -> 750
+            else -> 100
         }
 
         lifecycleScope.launch(Dispatchers.IO) {
             val quest = Quest(
                 name = name,
+                description = etQuestDescription.text.toString(),
                 startLocationName = etStartPoint.text.toString(),
                 destLocationName = etDestination.text.toString(),
                 distanceKm = calculatedDistanceKm,
-                difficulty = spinnerDifficulty.selectedItem.toString(),
-                imageUri = selectedImageUri.toString()
+                difficulty = difficultyStr,
+                imageUri = selectedImageUri?.toString() ?: "",
+                xpReward = xpReward,
+                status = "available"
             )
             database.questDao().insertQuest(quest)
             
             withContext(Dispatchers.Main) {
                 Toast.makeText(requireContext(), "Quest Saved!", Toast.LENGTH_LONG).show()
                 etQuestName.text.clear()
+                etQuestDescription.text.clear()
                 etStartPoint.text.clear()
                 etDestination.text.clear()
                 ivQuestImage.visibility = View.GONE
+                view?.findViewById<TextView>(R.id.tv_image_hint)?.visibility = View.VISIBLE
                 selectedImageUri = null
                 map.overlays.removeAll { it is Marker }
                 map.invalidate()
