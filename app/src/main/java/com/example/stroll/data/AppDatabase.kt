@@ -5,11 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [DailyStat::class, Quest::class], version = 3, exportSchema = false)
+@Database(entities = [DailyStat::class, Quest::class, Achievement::class], version = 5, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun statDao(): StatDao
-    abstract fun questDao(): QuestDao 
+    abstract fun questDao(): QuestDao
+    abstract fun achievementDao(): AchievementDao
 
     companion object {
         @Volatile
