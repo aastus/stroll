@@ -163,22 +163,27 @@ class QuestsFragment : Fragment() {
 
     private fun handleQuestAction(quest: Quest, position: Int) {
         lifecycleScope.launch(Dispatchers.IO) {
+            val questPrefs = requireContext().getSharedPreferences("QuestPrefs", android.content.Context.MODE_PRIVATE)
+
             when (quest.status) {
                 "available", "paused" -> {
-                    // Pause any currently active quest first
                     val activeQuest = database.questDao().getActiveQuest()
                     if (activeQuest != null && activeQuest.id != quest.id) {
                         database.questDao().updateQuestStatus(activeQuest.id, "paused")
+                        // Зберігаємо поточний прогрес як accumulated
+                        questPrefs.edit().putInt("quest_${activeQuest.id}_accumulated", activeQuest.currentSteps).apply()
                     }
-                    // Activate this quest
                     database.questDao().updateQuestStatus(quest.id, "active")
+                    // Встановлюємо accumulated з поточного прогресу квесту
+                    questPrefs.edit().putInt("quest_${quest.id}_accumulated", quest.currentSteps).apply()
                     withContext(Dispatchers.Main) {
                         Toast.makeText(requireContext(), "Quest \"${quest.name}\" activated!", Toast.LENGTH_SHORT).show()
                     }
                 }
                 "active" -> {
-                    // Pause this quest
                     database.questDao().updateQuestStatus(quest.id, "paused")
+                    // Зберігаємо прогрес
+                    questPrefs.edit().putInt("quest_${quest.id}_accumulated", quest.currentSteps).apply()
                     withContext(Dispatchers.Main) {
                         Toast.makeText(requireContext(), "Quest \"${quest.name}\" paused", Toast.LENGTH_SHORT).show()
                     }

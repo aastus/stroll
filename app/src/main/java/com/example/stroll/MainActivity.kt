@@ -7,13 +7,15 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.stroll.service.StepTrackingService
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
-    private val PERMISSION_REQUEST_ACTIVITY_RECOGNITION = 100
+    private val PERMISSION_REQUEST_CODE = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,13 +37,40 @@ class MainActivity : AppCompatActivity() {
 
         navView.setupWithNavController(navController)
 
+        requestPermissionsAndStartService()
+    }
+
+    private fun requestPermissionsAndStartService() {
+        val permissionsNeeded = mutableListOf<String>()
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (checkSelfPermission(Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(
-                    arrayOf(Manifest.permission.ACTIVITY_RECOGNITION),
-                    PERMISSION_REQUEST_ACTIVITY_RECOGNITION
-                )
+                permissionsNeeded.add(Manifest.permission.ACTIVITY_RECOGNITION)
             }
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                permissionsNeeded.add(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+
+        if (permissionsNeeded.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, permissionsNeeded.toTypedArray(), PERMISSION_REQUEST_CODE)
+        } else {
+            startStepTrackingService()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            startStepTrackingService()
+        }
+    }
+
+    private fun startStepTrackingService() {
+        val serviceIntent = Intent(this, StepTrackingService::class.java)
+        startForegroundService(serviceIntent)
     }
 }
