@@ -1,6 +1,7 @@
 package com.example.stroll.ui.profile
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.stroll.R
 import com.example.stroll.data.AppDatabase
+import com.example.stroll.ui.achievements.AchievementsActivity
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,7 +38,14 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Ініціалізація вкладок
+        view.findViewById<MaterialButton>(R.id.btn_achievements)
+            .setOnClickListener {
+
+                startActivity(
+                    Intent(requireContext(), AchievementsActivity::class.java)
+                )
+            }
+
         tabStatistics = view.findViewById(R.id.tab_statistics)
         tabSettings = view.findViewById(R.id.tab_settings)
         layoutStatistics = view.findViewById(R.id.layout_statistics)
