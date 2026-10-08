@@ -44,7 +44,7 @@ This policy applies to:
 This policy does not define the internal implementation of third-party services.
 
 ## Technologies
-- **Kotlin** — primary development language.
+- **Kotlin**1.9.22 — primary development language.
 - **Android Studio** — development environment.
 - **Android 8.0+ (API 26+)** — minimum target version.
 - **Google Fit API** — retrieving physical activity data on Android.
