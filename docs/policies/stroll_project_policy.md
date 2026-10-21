@@ -44,7 +44,7 @@ This policy applies to:
 This policy does not define the internal implementation of third-party services.
 
 ## Technologies
-- **Kotlin** — primary development language.
+- **Kotlin**1.9.22 — primary development language.
 - **Android Studio** — development environment.
 - **Android 8.0+ (API 26+)** — minimum target version.
 - **Google Fit API** — retrieving physical activity data on Android.
@@ -52,14 +52,13 @@ This policy does not define the internal implementation of third-party services.
 - **Firebase** — remote data storage and synchronization.
 - **Push notification service** — reminders and system notifications.
 - **Google Analytics / Firebase Analytics** — product analytics.
-- **Room or an equivalent local persistence layer** — local storage.
+- **SQLite** — local storage.
 - **JUnit** and Android/Kotlin testing tools — testing.
 - **Git** — version control.
 A specific library may be replaced with an equivalent one only after verifying its compatibility with this policy.
 
 ## Fundamental Principles
 - **Separation of Layers.** Presentation, Application, Domain, and Infrastructure are kept separate.
-- **DDD for Business Logic.** Quests, progress, activity, achievements, and levels are modeled as domain concepts.
 - **Third-party logic remains outside the project.** Stroll does not duplicate the business rules of Google Fit, Google Maps, Firebase, or Android.
 - **Dependency inversion.** The Domain layer does not depend on the Android Framework, Google Fit, Google Maps, or Firebase SDK.
 - **Strictly typed OOP, SOLID, clean code.**
