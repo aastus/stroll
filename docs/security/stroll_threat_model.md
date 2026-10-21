@@ -1,8 +1,8 @@
-# StepQuest Threat Model
+# Stroll Threat Model
 
 ## 1. Purpose
 
-This document identifies potential security threats to the StepQuest Android application using the simplified STRIDE methodology.
+This document identifies potential security threats to the Stroll Android application using the simplified STRIDE methodology.
 
 STRIDE classifies threats into six categories: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege.
 
@@ -10,7 +10,7 @@ The purpose of this model is to identify important risks, document their potenti
 
 ## 2. Scope
 
-This threat model covers the StepQuest Android application and the following components:
+This threat model covers the Stroll Android application and the following components:
 
 - User authentication through Google Account.
 - Activity tracking using Google Fit or supported device sensors.
@@ -23,7 +23,7 @@ This threat model covers the StepQuest Android application and the following com
 
 The model focuses on the application's data flows, trust boundaries, authentication, authorization, activity data integrity, privacy, and availability.
 
-The model does not assess the internal security architecture of Google or Firebase. It considers the risks that arise from StepQuest's use and configuration of those services.
+The model does not assess the internal security architecture of Google or Firebase. It considers the risks that arise from Stroll's use and configuration of those services.
 
 ## 3. System Components and Trust Boundaries
 
@@ -35,7 +35,7 @@ The system consists of the Android user interface, application services, domain 
 
 The main trust boundaries are:
 
-1. Between the user and the StepQuest application.
+1. Between the user and the Stroll application.
 2. Between the application and Android device services.
 3. Between the application and Google authentication or activity services.
 4. Between the application and Firebase cloud infrastructure.

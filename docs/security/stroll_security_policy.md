@@ -1,12 +1,12 @@
-# StepQuest Security Policy
+# Stroll Security Policy
 
 ## 1. Purpose
 
-This Security Policy defines the security requirements, rules, and procedures for developing, testing, maintaining, and operating the StepQuest mobile application. Its purpose is to protect user accounts, personal information, physical activity records, application resources, and communication with external services.
+This Security Policy defines the security requirements, rules, and procedures for developing, testing, maintaining, and operating the Stroll mobile application. Its purpose is to protect user accounts, personal information, physical activity records, application resources, and communication with external services.
 
 ## 2. Scope
 
-This policy applies to the StepQuest Android application, its source code, local data storage, Firebase infrastructure, Google Account authentication, Google Fit integration, Google Maps integration, Firebase Cloud Messaging, development tools, and project documentation.
+This policy applies to the Stroll Android application, its source code, local data storage, Firebase infrastructure, Google Account authentication, Google Fit integration, Google Maps integration, Firebase Cloud Messaging, development tools, and project documentation.
 
 It applies to all project team members involved in development, analysis, testing, and maintenance.
 
@@ -36,7 +36,7 @@ All team members must report suspected vulnerabilities, exposed credentials, una
 
 ## 5. Authentication and Access Control
 
-StepQuest uses Google Account authentication through OAuth 2.0 and the applicable Google authentication libraries.
+Stroll uses Google Account authentication through OAuth 2.0 and the applicable Google authentication libraries.
 
 The application must use supported authentication mechanisms and must not collect or store Google account passwords directly.
 
@@ -48,7 +48,7 @@ Administrative access to Firebase, Google Cloud, source repositories, and other 
 
 ## 6. Data Protection
 
-StepQuest processes user profile information, physical activity records, quest progress, achievements, settings, and potentially location-related information.
+Stroll processes user profile information, physical activity records, quest progress, achievements, settings, and potentially location-related information.
 
 The application must collect only the data necessary for its documented functionality.
 
@@ -70,7 +70,7 @@ The application should minimize opportunities for artificial step inflation. How
 
 ## 8. Offline Storage and Synchronization
 
-StepQuest must preserve collected activity data when an Internet connection is unavailable.
+Stroll must preserve collected activity data when an Internet connection is unavailable.
 
 Locally stored records must be associated with the correct user and tracked using a synchronization status.
 
@@ -82,7 +82,7 @@ Failed synchronization attempts must not result in the permanent deletion of uns
 
 ## 9. External Services and API Security
 
-StepQuest integrates with Google Account authentication, Google Fit, Google Maps, Firebase, and Firebase Cloud Messaging.
+Stroll integrates with Google Account authentication, Google Fit, Google Maps, Firebase, and Firebase Cloud Messaging.
 
 Only the permissions and API scopes required for application functionality should be requested.
 

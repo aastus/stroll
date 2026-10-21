@@ -1,16 +1,16 @@
-# StepQuest Privacy Policy
+# Stroll Privacy Policy
 
 ## 1. Introduction
 
-This Privacy Policy explains how the StepQuest mobile application collects, uses, stores, and protects information associated with its users.
+This Privacy Policy explains how the Stroll mobile application collects, uses, stores, and protects information associated with its users.
 
-StepQuest is an Android application designed to encourage physical activity through step tracking, walking quests, maps, statistics, achievements, and virtual rewards.
+Stroll is an Android application designed to encourage physical activity through step tracking, walking quests, maps, statistics, achievements, and virtual rewards.
 
 This document describes the intended data-processing practices of the project. It must be reviewed and updated to reflect the actual implementation before the application is publicly released.
 
 ## 2. Scope
 
-This policy applies to information processed by the StepQuest Android application and its integrated services, including Google Account authentication, Google Fit, Google Maps, Firebase, and Firebase Cloud Messaging.
+This policy applies to information processed by the Stroll Android application and its integrated services, including Google Account authentication, Google Fit, Google Maps, Firebase, and Firebase Cloud Messaging.
 
 The policy covers user profiles, authentication-related information, activity records, quest progress, achievements, settings, and location-related information where the relevant functionality requires it.
 
@@ -20,7 +20,7 @@ The policy covers user profiles, authentication-related information, activity re
 
 The application may process a user identifier and basic account information made available through the selected Google authentication configuration, such as a name or email address, if the corresponding permissions and implementation require them.
 
-StepQuest does not need to collect or store the user's Google account password.
+Stroll does not need to collect or store the user's Google account password.
 
 ### 3.2 Physical Activity Information
 
@@ -64,7 +64,7 @@ The application should not use personal information for unrelated purposes witho
 
 ## 5. Data Storage
 
-StepQuest may store activity records and other application information locally on the Android device to support offline operation.
+Stroll may store activity records and other application information locally on the Android device to support offline operation.
 
 Firebase may be used to store and synchronize user profiles, activity records, quest progress, achievements, statistics, and settings.
 
@@ -74,7 +74,7 @@ The application should use appropriate access controls and secure communication.
 
 ## 6. Third-Party Services
 
-StepQuest may rely on the following services:
+Stroll may rely on the following services:
 
 - Google Account authentication for account access.
 - Google Fit or supported Google activity services for physical activity information.
@@ -88,7 +88,7 @@ The application should disclose the services it actually uses and the data share
 
 ## 7. Data Sharing
 
-StepQuest does not intend to sell users' personal information.
+Stroll does not intend to sell users' personal information.
 
 Information may be transmitted to the integrated services when necessary to provide authentication, activity tracking, mapping, cloud synchronization, or notifications.
 
@@ -116,7 +116,7 @@ Revoking a permission may limit the corresponding feature.
 
 ## 10. Data Security
 
-StepQuest applies appropriate technical and organizational measures to protect information against unauthorized access, loss, disclosure, and modification.
+Stroll applies appropriate technical and organizational measures to protect information against unauthorized access, loss, disclosure, and modification.
 
 These measures include authentication, access restrictions, secure network communication, local data protection, input validation, and controlled access to project infrastructure.
 
@@ -124,7 +124,7 @@ No software system can guarantee absolute security. Suspected incidents involvin
 
 ## 11. Children's Privacy
 
-StepQuest is intended for a broad audience, but the final release must determine whether additional requirements apply when children use the application.
+Stroll is intended for a broad audience, but the final release must determine whether additional requirements apply when children use the application.
 
 If the application is made available to children, the project team must assess applicable age-related privacy requirements, consent rules, data collection restrictions, and platform policies before release.
 
