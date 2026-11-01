@@ -43,6 +43,9 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
 import java.util.Locale
+import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
+import org.osmdroid.util.MapTileIndex
+import com.example.stroll.BuildConfig
 
 data class AddressSuggestion(val displayName: String, val lat: Double, val lon: Double) {
     override fun toString(): String = displayName
@@ -81,7 +84,9 @@ class CreateFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Configuration.getInstance().load(requireContext(), PreferenceManager.getDefaultSharedPreferences(requireContext()))
+        val config = Configuration.getInstance()
+        config.load(requireContext(), PreferenceManager.getDefaultSharedPreferences(requireContext()))
+        config.userAgentValue = "Stroll/1.0 (Android; contact: lizatiukh@gmail.com)"
         return inflater.inflate(R.layout.fragment_create, container, false)
     }
 
@@ -120,6 +125,20 @@ class CreateFragment : Fragment() {
     }
 
     private fun setupMap() {
+        val tiles = object : OnlineTileSourceBase(
+            "MapTiler", 0, 20, 256, ".png",
+            arrayOf("https://api.maptiler.com/maps/streets-v2/256/")
+        ) {
+            override fun getTileURLString(pMapTileIndex: Long): String {
+                return baseUrl +
+                        MapTileIndex.getZoom(pMapTileIndex) + "/" +
+                        MapTileIndex.getX(pMapTileIndex) + "/" +
+                        MapTileIndex.getY(pMapTileIndex) +
+                        mImageFilenameEnding + "?key=" + BuildConfig.MAPTILER_KEY
+            }
+        }
+        map.setTileSource(tiles)
+
         map.setMultiTouchControls(true)
         map.setOnTouchListener { v, _ -> v.parent.requestDisallowInterceptTouchEvent(true); false }
 
@@ -230,8 +249,10 @@ class CreateFragment : Fragment() {
     private fun fetchAddressSuggestions(query: String): List<AddressSuggestion> {
         val resultList = mutableListOf<AddressSuggestion>()
         try {
+
             val url = URL("https://photon.komoot.io/api/?q=${URLEncoder.encode(query, "UTF-8")}&limit=5")
             val connection = url.openConnection() as HttpURLConnection
+            connection.setRequestProperty("User-Agent", "Stroll/1.0 (Android; contact: lizatiukh@gmail.com)")
             val reader = BufferedReader(InputStreamReader(connection.inputStream))
             val jsonResponse = JSONObject(reader.readText())
             reader.close()
