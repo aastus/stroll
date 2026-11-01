@@ -81,6 +81,9 @@ class ProfileFragment : Fragment() {
         val prefs = requireActivity().getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
         val name = prefs.getString("name", "Walker") ?: "Walker"
         val goal = prefs.getInt("step_goal", 10000)
+        view.findViewById<EditText>(R.id.et_age).setText(prefs.getInt("age", 25).toString())
+        view.findViewById<EditText>(R.id.et_height).setText(prefs.getFloat("height", 170f).toString())
+        view.findViewById<EditText>(R.id.et_weight).setText(prefs.getFloat("weight", 65f).toString())
 
         // Встановлюємо в шапку
         view.findViewById<TextView>(R.id.tv_profile_name).text = name
@@ -161,24 +164,37 @@ class ProfileFragment : Fragment() {
         val btnSave = view.findViewById<MaterialButton>(R.id.btn_save)
         val etName = view.findViewById<EditText>(R.id.et_username)
         val etGoal = view.findViewById<EditText>(R.id.et_step_goal)
+        val etAge = view.findViewById<EditText>(R.id.et_age)
+        val etHeight = view.findViewById<EditText>(R.id.et_height)
+        val etWeight = view.findViewById<EditText>(R.id.et_weight)
 
         btnSave.setOnClickListener {
-            val newName = etName.text.toString()
+            val newName = etName.text.toString().trim()
             val newGoal = etGoal.text.toString().toIntOrNull() ?: 10000
+            val newAge = etAge.text.toString().toIntOrNull()
+            val newHeight = etHeight.text.toString().replace(',', '.').toFloatOrNull()
+            val newWeight = etWeight.text.toString().replace(',', '.').toFloatOrNull()
 
-            if (newName.isNotEmpty()) {
-                val prefs = requireActivity().getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
-                prefs.edit()
-                    .putString("name", newName)
-                    .putInt("step_goal", newGoal)
-                    .apply()
-
-                // Оновлюємо шапку відразу
-                view.findViewById<TextView>(R.id.tv_profile_name).text = newName
-                view.findViewById<TextView>(R.id.tv_avatar_initial).text = newName.firstOrNull()?.uppercase() ?: "W"
-
-                Toast.makeText(requireContext(), "Profile updated!", Toast.LENGTH_SHORT).show()
+            if (newName.isEmpty() || newAge == null || newHeight == null || newWeight == null ||
+                newHeight !in 50f..250f || newWeight !in 20f..300f
+            ) {
+                Toast.makeText(requireContext(), "Check your name, age, height and weight", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+
+            requireActivity().getSharedPreferences("UserProfile", Context.MODE_PRIVATE).edit()
+                .putString("name", newName)
+                .putInt("step_goal", newGoal)
+                .putInt("age", newAge)
+                .putFloat("height", newHeight)
+                .putFloat("weight", newWeight)
+                .apply()
+
+            view.findViewById<TextView>(R.id.tv_profile_name).text = newName
+            view.findViewById<TextView>(R.id.tv_avatar_initial).text =
+                newName.firstOrNull()?.uppercase() ?: "W"
+
+            Toast.makeText(requireContext(), "Profile updated!", Toast.LENGTH_SHORT).show()
         }
     }
 }

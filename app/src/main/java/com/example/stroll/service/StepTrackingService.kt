@@ -81,6 +81,7 @@ class StepTrackingService : Service(), SensorEventListener {
     override fun onSensorChanged(event: SensorEvent?) {
         if (event == null) return
 
+        reloadUserParams()
         val today = getTodayString()
 
         if (today != currentDayString) {
@@ -131,6 +132,13 @@ class StepTrackingService : Service(), SensorEventListener {
         if (totalMeters >= targetMeters) {
             database.questDao().updateQuestStatus(activeQuest.id, "completed")
         }
+    }
+
+    private fun reloadUserParams() {
+        val prefs = getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
+        val heightCm = prefs.getFloat("height", 170f)
+        userWeight = prefs.getFloat("weight", 65f)
+        stepLengthMeters = (heightCm * 0.415f) / 100f
     }
 
     private fun finalizeQuestDayProgress() {
