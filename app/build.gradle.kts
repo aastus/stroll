@@ -1,3 +1,10 @@
+import java.util.Properties
+
+val localProps = Properties().apply {
+    val f = rootProject.file("local.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -8,6 +15,11 @@ android {
     namespace = "com.example.stroll"
     compileSdk = 34
 
+    buildFeatures {
+        buildConfig = true
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.stroll"
         minSdk = 26
@@ -16,6 +28,12 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField(
+            "String",
+            "MAPTILER_KEY",
+            "\"${localProps.getProperty("MAPTILER_KEY", "")}\""
+        )
     }
 
     buildTypes {
@@ -30,9 +48,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-    }
-    buildFeatures {
-        viewBinding = true
     }
 }
 
