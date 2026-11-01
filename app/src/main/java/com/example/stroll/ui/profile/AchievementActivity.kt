@@ -11,6 +11,9 @@ import com.example.stroll.data.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import android.content.Intent
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.stroll.MainActivity
 
 class AchievementsActivity : AppCompatActivity() {
 
@@ -20,7 +23,16 @@ class AchievementsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_achievements)
-
+        val nav = findViewById<BottomNavigationView>(R.id.nav_view)
+        nav.selectedItemId = R.id.navigation_profile
+        nav.setOnItemSelectedListener { item ->
+            startActivity(Intent(this, MainActivity::class.java).apply {
+                putExtra("nav_dest", item.itemId)
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            })
+            finish()
+            true
+        }
         recyclerView = findViewById(R.id.recyclerAchievements)
         recyclerView.layoutManager = LinearLayoutManager(this)
 

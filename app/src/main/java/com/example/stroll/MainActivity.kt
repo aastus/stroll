@@ -12,12 +12,14 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.stroll.service.StepTrackingService
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.appcompat.app.AppCompatDelegate
 
 class MainActivity : AppCompatActivity() {
 
     private val PERMISSION_REQUEST_CODE = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
 
         val prefs = getSharedPreferences("UserProfile", Context.MODE_PRIVATE)
@@ -36,8 +38,16 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         navView.setupWithNavController(navController)
-
+        val dest = intent.getIntExtra("nav_dest", 0)
+        if (dest != 0) navView.selectedItemId = dest
         requestPermissionsAndStartService()
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        val dest = intent.getIntExtra("nav_dest", 0)
+        if (dest != 0) findViewById<BottomNavigationView>(R.id.nav_view).selectedItemId = dest
     }
 
     private fun requestPermissionsAndStartService() {

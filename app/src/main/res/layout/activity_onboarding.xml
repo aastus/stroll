@@ -99,7 +99,8 @@
                         android:background="@drawable/bg_input_field"
                         android:hint="e.g., Alex Johnson"
                         android:paddingHorizontal="16dp"
-                        android:textColor="@color/text_dark"
+                        android:textColor="#0D1B2A"
+                        android:textColorHint="#9AA0A6"
                         android:textSize="14sp" />
 
                     <TextView
@@ -119,7 +120,8 @@
                         android:hint="e.g., 25"
                         android:inputType="number"
                         android:paddingHorizontal="16dp"
-                        android:textColor="@color/text_dark"
+                        android:textColor="#0D1B2A"
+                        android:textColorHint="#9AA0A6"
                         android:textSize="14sp" />
 
                     <TextView
@@ -139,7 +141,8 @@
                         android:hint="e.g., 175"
                         android:inputType="numberDecimal"
                         android:paddingHorizontal="16dp"
-                        android:textColor="@color/text_dark"
+                        android:textColor="#0D1B2A"
+                        android:textColorHint="#9AA0A6"
                         android:textSize="14sp" />
 
                     <TextView
@@ -159,7 +162,8 @@
                         android:hint="e.g., 70"
                         android:inputType="numberDecimal"
                         android:paddingHorizontal="16dp"
-                        android:textColor="@color/text_dark"
+                        android:textColor="#0D1B2A"
+                        android:textColorHint="#9AA0A6"
                         android:textSize="14sp" />
 
                     <androidx.appcompat.widget.AppCompatButton
