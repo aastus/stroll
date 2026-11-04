@@ -18,4 +18,5 @@ data class Quest(
     val xpReward: Int = 100,
     val status: String = "available",
     val isDefault: Boolean = false
+    var isSynced: Boolean = false
 )

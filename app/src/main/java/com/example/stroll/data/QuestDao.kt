@@ -27,4 +27,7 @@ interface QuestDao {
 
     @Query("SELECT COUNT(*) FROM quests")
     suspend fun getQuestCount(): Int
+
+    @Query("SELECT * FROM quests WHERE isSynced = 0")
+    suspend fun getUnsyncedQuests(): List<Quest>
 }

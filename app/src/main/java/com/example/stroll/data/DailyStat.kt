@@ -10,4 +10,5 @@ data class DailyStat(
     var calories: Int,
     var distance: Double,
     var activeMinutes: Int
+    var isSynced: Boolean = false
 )

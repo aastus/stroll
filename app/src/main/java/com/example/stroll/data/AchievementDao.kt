@@ -11,6 +11,9 @@ interface AchievementDao {
     @Query("SELECT * FROM achievements")
     suspend fun getAllAchievements(): List<Achievement>
 
+    @Query("SELECT * FROM achievements WHERE isSynced = 0")
+    suspend fun getUnsyncedAchievements(): List<Achievement>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAchievement(
         achievement: Achievement

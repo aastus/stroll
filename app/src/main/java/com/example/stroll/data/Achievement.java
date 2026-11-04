@@ -26,6 +26,7 @@ public class Achievement {
 
     // timestamp часу розблокування
     private long unlockedTime = 0L;
+    var isSynced: Boolean = false
 
     public Achievement(
             @NonNull String id,
